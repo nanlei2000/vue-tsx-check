@@ -14,10 +14,16 @@ export default class App extends Vue {
   render() {
     return (
       <hello-world
-        {...componentOptions<HelloWorldProps, HelloWorldEvent>({
+        {...componentOptions<
+          HelloWorldProps,
+          HelloWorldEvent,
+          HTMLAnchorElement
+        >({
           attrs: {
             id: 'App',
             draggable: true,
+            translate: false,
+            href: 'javascript:;',
           },
           props: {
             msg: 'hello `tsx`',

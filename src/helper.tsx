@@ -2,7 +2,6 @@ interface Dictionary<T> {
   [key: string]: T
 }
 import * as Style from 'csstype'
-import * as React from 'react'
 /**
  * 指令不能写在这里面
  */
@@ -14,7 +13,7 @@ interface ElementOptions<
   /**
    * normal HTML attributes
    */
-  attrs?: Partial<Attrs>
+  attrs?: Partial<ExcludeSubType<Attrs, Function>>
   /**
    * DOM props
    */
@@ -51,8 +50,9 @@ interface DOMProps {
 
 interface ComponentOptions<
   Props extends object = {},
-  On extends Dictionary<Function> = Dictionary<Function>
-> extends ElementOptions<HTMLDivElement, On> {
+  On extends Dictionary<Function> = Dictionary<Function>,
+  Attrs extends HTMLElement = HTMLDivElement
+> extends ElementOptions<Attrs, On> {
   /**
    * Component props
    */
@@ -71,9 +71,10 @@ interface ComponentOptions<
  */
 export const componentOptions = <
   Props extends object = {},
-  On extends Dictionary<Function> = Dictionary<Function>
+  On extends Dictionary<Function> = Dictionary<Function>,
+  Attrs extends HTMLElement = HTMLDivElement
 >(
-  options: ComponentOptions<Props, On> = {}
+  options: ComponentOptions<Props, On, Attrs> = {}
 ) => {
   return options
 }
@@ -90,3 +91,12 @@ export const elementOptions = <
 }
 
 // const el = document.createElement('div')
+export type SubType<Base, Condition> = Pick<
+  Base,
+  { [Key in keyof Base]: Base[Key] extends Condition ? Key : never }[keyof Base]
+>
+
+export type ExcludeSubType<Base, Condition> = Pick<
+  Base,
+  { [Key in keyof Base]: Base[Key] extends Condition ? never : Key }[keyof Base]
+>

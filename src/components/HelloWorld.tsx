@@ -14,8 +14,12 @@ export default class HelloWorld extends Vue {
   public msg!: string
   render() {
     return (
-      <div
-        {...elementOptions<HTMLDivElement>({
+      <a
+        {...elementOptions<HTMLAnchorElement>({
+          attrs: {
+            // href: 'javascript:;',
+            draggable: true,
+          },
           on: {
             click: () => {
               const payload = {
@@ -36,9 +40,12 @@ export default class HelloWorld extends Vue {
             userSelect: 'none',
           },
         })}
+        onDrag={(payload: DragEvent) => {
+          console.log(payload)
+        }}
       >
         {this.msg}
-      </div>
+      </a>
     )
   }
 }
