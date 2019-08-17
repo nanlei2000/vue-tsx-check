@@ -1,7 +1,8 @@
 interface Dictionary<T> {
   [key: string]: T
 }
-import * as Style from 'csstype'
+import * as Style from '.'
+import { Vue } from 'vue-property-decorator'
 /**
  * 指令不能写在这里面
  */
@@ -100,3 +101,17 @@ export type ExcludeSubType<Base, Condition> = Pick<
   Base,
   { [Key in keyof Base]: Base[Key] extends Condition ? never : Key }[keyof Base]
 >
+
+// 以上弃用
+export const styleHint = (style: Style.Properties) => {
+  return style
+}
+export const cssValue = (value: string | number) => {
+  return (value as unknown) as CssValue
+}
+export type CssValue = undefined
+
+export type GenEvent<EventTuple extends [string, object]> = {
+  [p in EventTuple[0]]: (payload: EventTuple[1]) => any
+}
+export type ExtractProps<Component> = Partial<Omit<Component, keyof Vue>>

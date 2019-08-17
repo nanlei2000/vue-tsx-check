@@ -1,8 +1,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld, {
-  HelloWorldProps,
   HelloWorldEvent,
   HelloEventPayload,
+  HelloWorldTsx,
 } from './components/HelloWorld'
 import { componentOptions } from './helper'
 @Component({
@@ -13,32 +13,19 @@ import { componentOptions } from './helper'
 export default class App extends Vue {
   render() {
     return (
-      <hello-world
-        {...componentOptions<
-          HelloWorldProps,
-          HelloWorldEvent,
-          HTMLAnchorElement
-        >({
-          attrs: {
-            id: 'App',
-            draggable: true,
-            translate: false,
-            href: 'javascript:;',
-          },
-          props: {
-            msg: 'hello `tsx`',
-          },
+      <HelloWorldTsx
+        newMsg={'test'}
+        msg={'make Vue + tsx great again!'}
+        {...{
           on: {
-            hello: (payload: HelloEventPayload) => {
-              console.log(payload)
+            drag: payload => {
+              console.log(payload.event)
             },
-          },
-          nativeOn: {
-            click: (e: Event) => {
-              console.log(e)
+            hello: payload => {
+              console.log(payload.msg)
             },
-          },
-        })}
+          } as HelloWorldEvent,
+        }}
       />
     )
   }
