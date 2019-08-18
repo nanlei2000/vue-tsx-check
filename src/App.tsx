@@ -1,10 +1,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld, {
   HelloWorldEvent,
-  HelloEventPayload,
   HelloWorldTsx,
 } from './components/HelloWorld'
-import { componentOptions } from './helper'
 @Component({
   components: {
     HelloWorld,

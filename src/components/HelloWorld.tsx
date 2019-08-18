@@ -10,6 +10,8 @@ import moment from 'moment'
 import { DatePicker } from 'ant-design-vue'
 import { AntDatePicker } from '@/main'
 import { ofType } from 'vue-tsx-support'
+import { app, FetchCountFromRemoteAction } from '@/Store/modules/app'
+import Store from '@/Store'
 type HelloEvent = ['hello', HelloEventPayload]
 
 export interface HelloEventPayload {
@@ -45,6 +47,20 @@ class HelloWorldProps extends Vue {
 })
 export default class HelloWorld extends Mixins(HelloWorldProps) {
   private date = moment()
+  private handleAnchorClick() {
+    const payload = {
+      msg: 'hello',
+    }
+    const params: HelloEvent = [`hello`, payload]
+    this.$emit(...params)
+    const action: FetchCountFromRemoteAction = {
+      type: 'FetchCountFromRemote',
+      payload: {
+        time: Date.now(),
+      },
+    }
+    this.$store.dispatch(action)
+  }
   render() {
     return (
       <div
@@ -69,15 +85,6 @@ export default class HelloWorld extends Mixins(HelloWorldProps) {
               // href: 'javascript:;',
               draggable: true,
             },
-            on: {
-              click: () => {
-                const payload = {
-                  msg: 'hello',
-                }
-                const params: HelloEvent = [`hello`, payload]
-                this.$emit(...params)
-              },
-            },
             style: {
               marginBottom: '10px',
             },
@@ -92,6 +99,7 @@ export default class HelloWorld extends Mixins(HelloWorldProps) {
             this.$emit(...params)
             // console.log(payload)
           }}
+          onClick={this.handleAnchorClick}
         >
           {this.msg}
         </a>
