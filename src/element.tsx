@@ -218,7 +218,7 @@ export const ElTransfer = ofType<Partial<Transfer>>().convert(Transfer)
  * 传入泛型
  */
 export const getElTree = <K extends any = any, D extends any = TreeData>() => {
-  return ofType<Partial<Tree<K, D>>>().convert(Transfer)
+  return ofType<Partial<Tree<K, D>>>().convert(Tree)
 }
 
 export const ElUpload = ofType<Partial<Upload>>().convert(Upload)
