@@ -7,6 +7,7 @@ import { DatePicker } from 'ant-design-vue'
 import vuex from 'vuex'
 export const AntDatePicker = ofType<Partial<DatePicker>>().convert(DatePicker)
 import store from '@/Store/index'
+
 Vue.config.productionTip = false
 
 Vue.component(DatePicker.name, DatePicker)
