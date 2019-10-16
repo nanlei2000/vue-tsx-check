@@ -3,7 +3,7 @@ import HelloWorld, {
   HelloWorldEvent,
   HelloWorldTsx,
 } from './components/HelloWorld';
-import storeInstance, { genFetchCountFromRemote$ } from './Store';
+import storeInstance, { genFetchCount$ } from './Store';
 @Component({
   components: {
     HelloWorld,
@@ -26,7 +26,7 @@ export default class App extends Mixins() {
           } as HelloWorldEvent,
         }}
         nativeOnClick={() => {
-          genFetchCountFromRemote$({ time: 2 }).subscribe();
+          genFetchCount$({ time: 2 }).subscribe();
         }}
       />
     );
