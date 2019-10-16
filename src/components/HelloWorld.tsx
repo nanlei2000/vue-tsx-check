@@ -1,35 +1,27 @@
-import { Component, Prop, Vue, Mixins } from 'vue-property-decorator'
-import {
-  elementOptions,
-  styleHint,
-  cssValue,
-  GenEvent,
-  ExtractProps,
-} from '@/helper'
-import moment from 'moment'
-import { DatePicker } from 'ant-design-vue'
-import { AntDatePicker } from '@/main'
-import { ofType } from 'vue-tsx-support'
-import { app, FetchCountFromRemoteAction } from '@/Store/modules/app'
-import Store from '@/Store'
-type HelloEvent = ['hello', HelloEventPayload]
+import { Component, Prop, Vue, Mixins } from 'vue-property-decorator';
+import { elementOptions, styleHint, GenEvent, ExtractProps } from '@/helper';
+import moment from 'moment';
+import { DatePicker } from 'ant-design-vue';
+import { AntDatePicker } from '@/main';
+import { ofType } from 'vue-tsx-support';
+type HelloEvent = ['hello', HelloEventPayload];
 
 export interface HelloEventPayload {
-  msg: string
+  msg: string;
 }
 type HelloDragEvent = [
   'drag',
   {
-    event: DragEvent
+    event: DragEvent;
   }
-]
+];
 @Component
 class HelloWorldProps extends Vue {
   @Prop({
     default: '',
     type: String,
   })
-  public msg!: string
+  public msg!: string;
 
   @Prop({
     default: '',
@@ -38,7 +30,7 @@ class HelloWorldProps extends Vue {
   /**
    * 信息
    */
-  public newMsg!: string
+  public newMsg!: string;
 }
 @Component({
   components: {
@@ -46,21 +38,7 @@ class HelloWorldProps extends Vue {
   },
 })
 export default class HelloWorld extends Mixins(HelloWorldProps) {
-  private date = moment()
-  private handleAnchorClick() {
-    const payload = {
-      msg: 'hello',
-    }
-    const params: HelloEvent = [`hello`, payload]
-    this.$emit(...params)
-    const action: FetchCountFromRemoteAction = {
-      type: 'FetchCountFromRemote',
-      payload: {
-        time: Date.now(),
-      },
-    }
-    this.$store.dispatch(action)
-  }
+  private date = moment();
   render() {
     return (
       <div
@@ -95,11 +73,10 @@ export default class HelloWorld extends Mixins(HelloWorldProps) {
               {
                 event: e,
               },
-            ]
-            this.$emit(...params)
+            ];
+            this.$emit(...params);
             // console.log(payload)
           }}
-          onClick={this.handleAnchorClick}
         >
           {this.msg}
         </a>
@@ -117,22 +94,16 @@ export default class HelloWorld extends Mixins(HelloWorldProps) {
             },
           }}
           nativeOnDrag={() => {
-            console.log(`date-picker`)
+            console.log(`date-picker`);
           }}
-          // style={styleHint({
-          //   textAlign: 'center',
-          //   cursor: 'pointer',
-          //   display: 'flex',
-          //   scale: cssValue(''),
-          // })}
         />
       </div>
-    )
+    );
   }
 }
 
-export type HelloWorldEvent = GenEvent<HelloEvent> & GenEvent<HelloDragEvent>
+export type HelloWorldEvent = GenEvent<HelloEvent> & GenEvent<HelloDragEvent>;
 
 export const HelloWorldTsx = ofType<ExtractProps<HelloWorldProps>>().convert(
   HelloWorld
-)
+);

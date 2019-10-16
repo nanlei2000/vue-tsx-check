@@ -1,30 +1,34 @@
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Mixins } from 'vue-property-decorator';
 import HelloWorld, {
   HelloWorldEvent,
   HelloWorldTsx,
-} from './components/HelloWorld'
+} from './components/HelloWorld';
+import storeInstance, { genFetchCountFromRemote$ } from './Store';
 @Component({
   components: {
     HelloWorld,
   },
 })
-export default class App extends Vue {
+export default class App extends Mixins() {
   render() {
     return (
       <HelloWorldTsx
         newMsg={'test'}
-        msg={'make Vue + tsx great again!'}
+        msg={storeInstance.state.app.globalCount + ''}
         {...{
           on: {
             drag: payload => {
-              console.log(payload.event)
+              console.log(payload.event);
             },
             hello: payload => {
-              console.log(payload.msg)
+              console.log(payload.msg);
             },
           } as HelloWorldEvent,
         }}
+        nativeOnClick={() => {
+          genFetchCountFromRemote$({ time: 2 }).subscribe();
+        }}
       />
-    )
+    );
   }
 }
